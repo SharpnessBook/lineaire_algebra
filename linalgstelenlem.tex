@@ -1,0 +1,714 @@
+\documentclass[11pt,oneside,a4paper]{article}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\title{Lineaire Algebra: Definities, Proposities, Gevolgen, Stellingen en Lemmata}
+\date{\today}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+
+\makeatletter
+\DeclareRobustCommand{\sqcdot}{\mathbin{\mathpalette\morphic@sqcdot\relax}}
+\newcommand{\morphic@sqcdot}[2]{%
+	\sbox\z@{$\m@th#1\centerdot$}%
+	\ht\z@=.33333\ht\z@
+	\vcenter{\box\z@}%
+}
+\makeatother
+
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\sign}{sgn}
+\DeclareMathOperator{\adj}{adj}
+\DeclareMathOperator{\vct}{vct}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\rdim}{dim_\mathbb{R}}
+\DeclareMathOperator{\cdim}{dim_\mathbb{C}}
+\DeclareMathOperator{\co}{co}
+\DeclareMathOperator{\rhom}{Hom_\mathbb{R}}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\pr}{pr}
+
+\begin{document}
+	\maketitle
+	
+	\section{Eerstegraadsvergelijkingen en Matrices}
+	
+	\paragraph{Definitie 1.4}
+		Twee stelsels eerstegraadsvergelijkingen worden \textbf{rij-equivalent} genoemd indien het ene uit het andere kan ontstaan door een opeenvolging van elementaire rijoperaties. (In matrixtaal: twee matrices noemen we rij-equivalent indien de ene uit de andere kan ontstaan door een opeenvolging van elementaire rijoperaties.)
+	\paragraph{Definitie 1.5}
+		Het eerste element (van links) in een rij van een matrix dat niet nul is, noemen we het \textbf{leidende element} van die rij. \\ Een matrix staat in \textbf{echelonvorm} (of is een \textbf{echelonmatrix}) als hij de volgende eigenschappen heeft:
+		\begin{itemize}
+			\item in elke rij is het leidende element gelijk aan $1$;
+			\item alle elementen in de rijen onder een leidend element $1$, in de kolom waarin die leidende $1$ staat zowel als in de kolommen links ervan, zijn nul;
+			\item de eventuele rijen met enkel nullen staan onderaan.
+		\end{itemize}
+		Indien we niet eisen dat de leidende elementen gelijk zijn aan $1$, maar de andere condities wel voldaan zijn, dan spreken we ook van een matrix is \textbf{trapvorm}. Een matrix is \textbf{rijgereduceerd} als hij in echelonvorm staat en als bovendien boven de leidende elementen $1$ alle elementen in dezelfde kolom van die $1$ nul zijn.
+	\paragraph{Definitie 1.6}
+		In een stelsel eerstegraadsvergelijkingen, waarvan de matrix in echelonvorm of rijgereduceerde vorm (resp. trapvorm) staat, noemen we de variabelen die corresponderen met de kolommen waarin een leidende $1$ (resp. leidend element) staat \textbf{gebonden variabelen} (of basisvariabelen). De andere variabelen, indien er zijn, worden \textbf{vrije variabelen} genoemd.
+	\paragraph{Propositie 1.8}
+		Elke matrix is rij-equivalent met een matrix in echelonvorm en zelfs met een matrix die rijgereduceerd is.
+	\paragraph{Definitie 1.9}
+		De methode om een matrix te herleiden tot een matrix in echelonvorm of in rijgereduceerde vorm door middel van elementaire rijoperaties, staat bekend als de Gauss-eliminatiemethode, of kortweg als Gauss-eliminatie.
+	\paragraph{Stelling 1.11}
+		Veronderstel dat de coëfficiëntenmatrix van een ($m$ bij $n$)-stelsel eerstegraadsvergelijkingen in echelonvorm is,  met $m-r$ nulrijen onderaan.
+		%\begin{center}
+			%\begin{pmatrix}[ccccccccccc|c]
+		 		%1 & * & * & * & $\cdots$ & & & & & $\cdots$ & * & $c_1$\\
+			 	%0 & 1 & * & * & $\cdots$ & & & & & $\cdots$ & * & $c_2$\\
+			 	%0 & 0 & 1 & * & $\cdots$ & & & & & $\cdots$ & * & $\cdots$\\
+			 	%0 & 0 & 0 & 0 & 1 & * & $\cdots$ & & & $\cdots$ & * & $\cdots$\\
+			 	%0 & 0 & 0 & 0 & 0 & 0 & $\ldots$ & 1 & * & $\ldots$ & * & $c_r$\\
+			 	%0 & 0 & 0 & 0 & 0 & 0 & $\ldots$ & 0 & 0 & $\ldots$ & 0 & $c_{r+1}$\\
+			 	%0 & $\cdots$ & & & & & & & & $\ldots$ & 0 & $c_{r+2}$\\
+			 	%$\vdots$ & & & & & & & & & & $\vdots$ & $\vdots$\\
+			 	%0 & $\cdots$ & & & & & & & & $\ldots$ & 0 & $c_{m}$\\
+			%\end{pmatrix}
+		%\end{center}
+		Dan heeft het stelsel
+		\begin{enumerate}
+			\item \textit{geen oplossingen} (we spreken van een \textbf{strijdig} of een \textbf{onoplosbaar} stelsel) als en slechts als minstens één van de rechterleden $c_{r+1}, \ldots , c_m$ verschillend van nul is;
+			\item \textit{juist één oplossing} als en slechts als $c_{r+1} = \ldots = c_m = 0$ en $r = n$
+			\item \textit{oneindig veel oplossingen} als en slechts als $c_{r+1} = \ldots = c_m = 0$ en $r < n$. In dit laatste geval zijn er precies $n-r$ vrije variabelen.
+		\end{enumerate}
+	\paragraph{Definitie 1.14}
+		Een ($m$ maal $n$)- (notatie ($m \times n$)-) \textbf{matrix} met \textit{elementen} of \textit{componenten} in $\mathbb{R}$ (resp. $\mathbb{C}$) is een rechthoekige tabel met $m$ rijen en $n$ kolommen, waarin op elke positie een reëel (resp. complex) getal staat. De verzameling van alle ($m \times n$)-matrices met elementen in $\mathbb{R}$ (resp. $\mathbb{C}$) noteren we met $\text{M}_{m \times n}(\mathbb{R})$ of $\mathbb{R}^{m \times n}$ (resp. $\text{M}_{m \times n}(\mathbb{C})$ of $\mathbb{C}^{m \times n}$). Een matrix waarbij $m=n$ noemen we een \textbf{vierkante matrix}.
+	\paragraph{Definitie 1.16}
+		Als $A$ een ($m \times n$)-matrix is, dan ontstaat er een ($n \times m$)-matrix door de rijen van $A$ als kolommen naast elkaar te schrijven, met andere woorden door te spiegelen rond de hoofddiagonaal. Deze ($n \times m$)-matrix noemen we de \textbf{getransponeerde matrix van} $A$, genoteerd met $A^T$ (Engels: transpose of $A$). Aldus geldt dat $(A^T)_{ij}=(A)_{ji}$.
+	\paragraph{Definitie 1.18}
+		\begin{enumerate}
+			\item Een vierkante matrix $A$ waarvoor $A^T = A$ noemt men een \textbf{symmetrische matrix} (Engels: symmetric).
+			\item Een vierkante matrix $A$ waarvoor $A^T = -A$ noemt men een \textbf{scheefsymmetrische matrix} (Engels: skew symmetric).
+			\item Een vierkante matrix $A$ is een \textbf{diagonaalmatrix} als voor alle $i$ en $j$ geldt: $(i \ne j \Rightarrow a_{ij}=0)$. In een diagonaalmatrix staan dus enkel op de diagonaal mogelijks elementen verschillend van nul.
+		\end{enumerate}
+	\paragraph{Definitie 1.19}
+		Als $A$ en $B$ reële of complexe matrices zijn met dezelfde afmetingen, zeg $m \times n$, dan definieert men de \textbf{som-matrix} $A+B$ als de ($m \times n$)-matrix, zodat voor alle $i$ en $j$ geldt $$(A+B)_{ij} = a_{ij} + b_{ij}.$$
+		Als $\lambda \in \mathbb{R}$ (of $\in \mathbb{C}$) een getal is, dan definieert men de ($m \times n$)-matrix $\lambda A$ door te stellen, voor alle $i$ en $j$, dat $$(\lambda A)_{ij} = \lambda a_{ij}.$$
+		We spreken van het product van een getal $\lambda$ met de matrix $A$. In het bijzonder noteren we $-A$ voor $(-1)A$ en $A-B$ voor $A+(-B)$.
+	\paragraph{Definitie 1.22}
+		Als $A = (a_ij) \in \mathbb{R}^{m\times n}$ en $B = (b_kl) \in \mathbb{R}^{n\times p}$, dan definieert men de \textbf{productmatrix} $C = A\cdot B \in \mathbb{R}^{m\times p}$ door voor alle $i (1\le i \le m)$ en $j (1\le j \le p)$ te stellen dat 
+		$$c_{il} = \begin{pmatrix} a_{i1} & a_{i2} & a_{i3} & \cdots & a_{in} \end{pmatrix} \begin{pmatrix} b_{1l} \\ b_{2l} \\ b_{3l} \\ \vdots \\ b_{nl}		\end{pmatrix} = \sum\limits_{j=1}^n a_{ij} b_{jl},$$
+		in woorden uit te drukken als `$c_{il} =$ rij $i$ van $A$ maal kolom $l$ van $B$'.
+	\paragraph{Definitie 1.23}
+		Voor elk natuurlijk getal $n \ne 0$ definiëren we de \textbf{eenheidsmatrix} $\mathbb{I}_n$ als de ($n \times n$)-diagonaalmatrix met op elke plaats op de diagonaal het getal $1$. Een matrix van de vorm $\lambda \mathbb{I}_n$ wordt ook wel een \textbf{scalaire matrix} genoemd.
+	\paragraph{Definitie 1.26}
+		Het \textbf{spoor} (Engels: trace) $\Tr(A)$ van een vierkante ($n \times n$)-matrix is de som van de elementen op de hoofddiagonaal van $A$, met andere woorden $\Tr(A)=\sum_{i=1}^{n} a_{ii}$.
+	\paragraph{Stelling 1.28}
+		Een stelsel van eerstgraadsvergelijkingen (met coëfficiënten in $\mathbb{R}$ of in $\mathbb{C}$) heeft
+		\begin{enumerate}
+			\item ofwel geen oplossingen;
+			\item ofwel juist één oplossing;
+			\item ofwel oneindig veel oplossingen.
+		\end{enumerate}
+	\paragraph{Definitie 1.29}
+		Veronderstel dat $A \in \mathbb{R}^{m \times n}$. Een matrix $B$ wordt een \textbf{links inverse} van $A$ genoemd als $B\cdot A = \mathbb{I}_n$. Een matrix $B$ wordt een \textbf{rechts inverse} van $A$ genoemd als $A\cdot B = \mathbb{I}_m$.
+	\paragraph{Stelling 1.32}
+		Als een vierkante matrix $A$ een links inverse $B$ en een rechts inverse $C$ heeft, dan geldt $B=C$.
+	\paragraph{Definitie 1.33}
+		Een ($n\times n$)-matrix $A$ (met elementen in $\mathbb{R}$ of $\mathbb{C}$) noemen we \textbf{inverteerbaar} (of \textbf{regulier}, of \textbf{niet-singulier}) als er een ($n\times n$)-matrix $B$ bestaat die links en rechts inverse is van $A$. Deze matrix $B$ wordt dan de \textbf{inverse matrix} van $A$ genoemd, en wordt genoteerd als $A^{-1}$. In het andere geval heet $A$ \textbf{niet-inverteerbaar} of \textbf{singulier}.
+	\paragraph{Stelling 1.34}
+		Als $A$ en $B$ inverteerbare matrices zijn (van dezelfde afmetingen), dan is ook hun product $A \cdot B$ inverteerbaar en bovendien geldt dat $$(A \cdot B)^{-1}=B^{-1} \cdot A^{-1}.$$
+	\paragraph{Definitie 1.36}
+		Een elementaire ($n\times n$)-matrix $E_n$ is een matrix die men verkrijgt uit de eenheidsmatrix $\mathbb{I}_n$ door er juist één elementaire rijoperatie op uit te voeren.
+	\paragraph{Stelling 1.37}
+		Een elementaire rijoperatie uitvoeren op een matrix $A$ komt precies overeen met het links vermenigvuldigen van die matrix $A$ met een elementaire matrix $E_n$ (van type I, II of III, corresponderend met de gewenste rijoperatie).
+	\paragraph{Stelling 1.38}
+		Elementaire matrices zijn inverteerbare matrices, hun inverse is een elementaire matrix van hetzelfde type.
+	\paragraph{Stelling 1.39}
+		Zij $A$ een ($n \times n$)-matrix. Dan zijn volgende beweringen equivalent:
+		\begin{enumerate}
+			\item de matrix $A$ heeft een links inverse $B$;
+			\item het stelsel $A \cdot X=0$ heeft \textit{enkel} de (evidente) oplossing $X = 0$;
+			\item de matrix $A$ is rij-equivalent met de eenheidsmatrix $\mathbb{I}_n$;
+			\item de matrix $A$ is een product van elementaire matrices;
+			\item de matrix $A$ is inverteerbaar met inverse $B$;
+			\item de matrix $A$ heeft een rechts inverse $B$.
+		\end{enumerate}
+	\paragraph{Gevolg 1.40}
+		Er bestaat een heel praktische manier om de inverteerbaarheid van een vierkante matrix na te gaan en de eventuele inverse matrix te berekenen, zoals hierna uiteengezet.
+	\paragraph{Definitie 1.43}
+		Een ($m \times n$)-matrix $A = (a)_{ij}$ heet \textbf{bovendriehoeks} als, voor alle $i$ en $j$ met $1 \le i \le m$ en $1 \le j \le n$, geldt dat, als $i > j$, dan $a_{ij} = 0$. Wanneer, als $j > i$, dan $a_{ij} = 0$, dan spreken we van een \textbf{benedendriehoeks}matrix. (Engels: upper triangular, resp. lower triangular.)
+	\paragraph{Lemma 1.44}
+		Veronderstel dat $A$ en $B$ ($n \times n$)-matrices zijn. Dan geldt:
+		\begin{enumerate}
+			\item als $A$ en $B$ benedendriehoeks zijn, dan is ook $A \cdot B$ benedendriehoeks.
+			\item als $A$ en $B$ bovendriehoeks zijn, dan is ook $A \cdot B$ bovendriehoeks.
+		\end{enumerate}
+	\paragraph{Stelling 1.45}
+		Veronderstel dat $A$ een ($m \times n$)-matrix (met elementen in $\mathbb{R}$ of $\mathbb{C}$) is, die in trapvorm kan gebracht worden door elementaire rijoperaties zonder \textit{rijomwisselingen} te gebruiken. Dan bestaat er een ($m \times m$)-benedendriehoeksmatrix $L$ (Lower triangular) en een ($m \times n$)-bovendriehoeksmatrix $U$ (Upper triangular) zodat $A = L \cdot U$.
+	\paragraph{Stelling 1.48}
+		Zij $A$ een inverteerbare ($n \times n$)-matrix die via rijoperaties tot in trapvorm kan gebracht worden zonder rijen te verwisselen. Dan bestaat er een \textit{unieke} benedendriehoeksmatrix $L$ met enkel $1$ op de diagonaal en een \textit{unieke} bovendriehoeksmatrix $U$ zodat $A = LU$.
+		
+	\section{Determinanten}
+	
+	\paragraph{Definitie 2.1}
+		Een afbeelding $$f: \mathbb{R}^{n \times n} \to \mathbb{R}: A = \begin{pmatrix}
+			R_1 \\ R_2 \\ R_3 \\ \vdots \\ R_n
+		\end{pmatrix} \mapsto f(A)$$ met de eigenschappen
+		\begin{itemize}
+			\item[\textbf{D-1}] $f(\mathbb{I}_n) = 1$;
+			\item[\textbf{D-2}] $f(A)$ verandert van teken als men in de matrix $A$ twee rijen van plaats wisselt;
+			\item[\textbf{D-3}] $f$ is lineair in de eerste rij, dit wilt zeggen dat voor alle $\lambda , \mu \in \mathbb{R}$ geldt dat
+			$$f(\begin{pmatrix}
+				\lambda R_1 + \mu R_1^{'} \\ R_2 \\ R_3 \\ \vdots \\ R_n
+			\end{pmatrix}) = \lambda f(\begin{pmatrix}
+			R_1 \\ R_2 \\ R_3 \\ \vdots \\ R_n \end{pmatrix}) + \mu f(\begin{pmatrix}
+			R_1^{'} \\ R_2 \\ R_3 \\ \vdots \\ R_n \end{pmatrix});$$
+		\end{itemize}
+		noemen we een determinant-afbeelding.
+	\paragraph{Stelling 2.2}
+		Een afbeeling $f: \mathbb{R}^{n \times n} \to \mathbb{R}: A \mapsto f(A)$ die aan eigenschappen D-1, D-2, en D-3 voldoet, voldoet eveneens aan de volgende eigenschappen:
+		\begin{itemize}
+			\item[\textbf{D-4}] $f$ is lineair in rij $i$ voor elke $i \in \{1,2,\ldots ,n\}$;
+			\item[\textbf{D-5}] als er in de matrix $A$ een nulrij is, of als er twee gelijke rijen zijn in $A$, dan is $f(A) = 0$.
+		\end{itemize}
+	\paragraph{Stelling 2.3}
+		Als $f: \mathbb{R}^{n \times n} \to \mathbb{R}: A \mapsto f(A)$ een determinantafbeelding is, dan geldt:
+		\begin{enumerate}
+			\item als men op de matrix $A$ een elementaire rijoperatie uitvoert van het type $R_i \to R_i + \lambda R_j \ (j\ne i)$, dan verandert $f(A)$ niet;
+			\item als $E$ een elementaire matrix is, dan is 
+			$$ f(E) = \begin{cases}
+				1 \ \ \text{ als $E$ correspondeert met $R_i \to R_i + \lambda R_j \ (j\ne i)$}\\
+				-1 \text{ als $E$ correspondeert met $R_i \leftrightarrow R_j \ (j\ne i)$}\\
+			 	\lambda \ \ \text{ als $E$ correspondeert met $R_i \to \lambda R_i$;}
+			\end{cases} $$
+			\item Als $E$ een elementaire matrix is, geldt steeds dat $f(E \cdot A) = f(E) \cdot f(A)$.
+		\end{enumerate}
+	\paragraph{Stelling 2.4}
+		Als $f: \mathbb{R}^{n \times n} \to \mathbb{R}: A \mapsto f(A)$ een determinantafbeelding is, dan geldt:
+		\begin{enumerate}
+			\item als $A$ een driehoeksmatrix is, dan is $f(A)$ gelijk aan het product van de diagonaalelementen in $A$ (in formulevorm: $f(A)= \prod_{i=1}^{n} (A)_{ii}$);
+			\item $A$ is inverteerbaar als en slechts als $f(A) \ne 0$;
+			\item $f(A \cdot B) = f(A) \cdot f(B)$ voor elke twee matrices $A$ en $B$ in $\mathbb{R}^{n \times n}$;
+			\item $f(A^T) = f(A)$.
+		\end{enumerate}
+	\paragraph{Gevolg 2.5}
+		\begin{enumerate}
+			\item Als een 'determinantafbeelding' $f$ bestaat, dan volgt dus dat $f(A)$ volledig bepaalt/determineert of de matrix $A$ al dan niet inverteerbaar is. Vandaar de naamgeving.
+			\item Als $f$ een determinantafbeelding is, en de matrix $A$ is inverteerbaar, dan is $f(A^{-1}) = \frac{1}{f(A)}$.
+			\item Omdat $f(A) = f(A^T)$ voor een determinantafbeelding $f$ kunnen we nu ook eenvoudig inzien dat de eigenschappen \textbf{D-2} en \textbf{D-3} en bijgevolg ook \textbf{D-4} en \textbf{D-5} blijven gelden wanneer ze uitgedrukt worden in termen van kolommen in plaats van in termen van rijen.
+		\end{enumerate}
+	\paragraph{Definitie 2.6}
+		Een \textbf{transpositie} is een permutatie die twee elementen verwisselt en alle andere elementen op zichzelf afbeeldt.
+	\paragraph{Stelling 2.7}
+		Elke permutatie $\mathcal{S}_n$ is een samenstelling van transposities.
+	\paragraph{Definitie 2.8}
+		Zij $\sigma \in \mathcal{S}_n$.
+		\begin{enumerate}
+			\item Zij $i$ en $j$ verschillende elementen uit $\{1,2,3,\ldots ,n,n-1\}$. Het koppel $(i,j)$ is een \textbf{inversie} van $\sigma$ als $i<j$ en $\sigma(i)>\sigma(j)$.
+			\item Het \textbf{teken} van $\sigma$ (Engels: sign), genoteerd als $\sign(\sigma)$, is $+1$ als het aantal inversies van $\sigma$ even is, en $-1$ als het aantal oneven is. In formulevorm: $$\sign(\sigma) = (-1)^{\text{\# \{inversies van $\sigma$\}}}.$$
+			Men zegt ook in het eerste geval dat $\sigma$ \textbf{even} is, en in het tweede dat $\sigma$ \textbf{oneven} is.
+		\end{enumerate}
+	\paragraph{Definitie 2.10}
+		Zij $\sigma$ een willekeurige permutatie en $\tau$ een transpositie in $\mathcal{S}_n$. Dan geldt dat $\sign(\tau \circ \sigma) = -\sign(\sigma)$. Anders gezegd: samenstellen met een transpositie verwisselt het teken.
+	\paragraph{Stelling 2.12}
+		Zij $\sigma$ in $\mathcal{S}_n$ een samenstelling van $m$ transposities. Dan is $\sign(\sigma) = (-1)^m$.
+	\paragraph{Formule van determinantafbeelding}
+	$$f(A) = \sum\limits_{\sigma \in \mathcal{S}_n} \sign(\sigma)a_{1\sigma(1)}a_{2\sigma(2)}\ldots a_{n\sigma(n)}.$$
+	\paragraph{Definitie 2.15}
+		Nu we weten dat een determinantafbeelding bestaat en uniek is (voor elke $n \ge 1$), kunne we spreken van \textit{de} determinant van een vierkante matrix $A$. We gebruiken vanaf nu de populaire notatie $\det(A)$ of $\det A$ voor de determinant van $A$. Een andere veel gebruikte notatie hiervoor is $|A|$.
+	\paragraph{Definitie 2.19}
+		Zij $A$ een ($n\times n$)-matrix. Voor elke $i,j \in \{1,2,\ldots ,n\}$ is
+		\begin{itemize}
+			\item[$\sqcdot$] de $ij$-de \textbf{cofactor} $C_{ij}$ van $A$ het geheel van de termen in de formule ($2.2$) voor $\det(A)$ waarin $a_{ij}$ optreedt, na afzonderen van $a_{ij}$.
+			\item[$\sqcdot$] de $ij$-de \textbf{minor} van $A$ de $((n-1)\times (n-1))$-matrix $M_{ij}$, verkregen door uit $A$ de $i$-de rij en de $j$-de kolom te schrappen.
+		\end{itemize}
+		Ook geldt $$(-1)^{i+j}C_{ij} = \det(M_{ij}).$$
+	\paragraph{Stelling 2.20}
+		Zij $A$ een ($n \times n$)-matrix. Dan is
+		\begin{enumerate}
+			\item de ontwikkeling naar de $i$-de rij van $\det(A)$ gelijk aan $\sum_{j=1}^{n}a_{ij}C_{ij} = \sum_{j=1}^{n}(-1)^{i+j}a_{ij}\det(M_{ij})$;
+			\item de ontwikkeling naar de $j$-de kolom van $\det(A)$ gelijk aan $\sum_{i=1}^{n}a_{ij}C_{ij} = \sum_{i=1}^{n}(-1)^{i+j}a_{ij}\det(M_{ij})$.
+		\end{enumerate}
+	\paragraph{Definitie 2.22}
+		Voor een vierkante matrix $A \in \mathbb{R}^{n\times n}$ vormen we de matrix $$\adj(A) = (C_{ij})^T_{1 \le i \le n, 1 \le j \le n} = \text{de getransponeerde van de cofactorenmatrix,}$$
+		die we de \textbf{adjunctmatrix} of \textbf{toegevoegde matrix} van $A$ noemen.
+	\paragraph{Stelling 2.23}
+		Als $A \in \mathbb{R}^{n \times n}$, dan geldt dat
+		$$ A\cdot \adj(A) = \adj(A) \cdot A = \begin{pmatrix}
+			\det(A) & 0 & \cdots & 0 \\
+			0 & \det(A) & \cdots & 0 \\
+			\vdots & \vdots & \ddots & \vdots \\
+			0 & 0 & \cdots & \det(A)
+		\end{pmatrix} = \det(A)\mathbb{I}_n.$$
+	\paragraph{Gevolg 2.24}
+		Als de matrix $A \in \mathbb{R}^{n \times n}$ inverteerbaar is, met andere woorden als $\det(A) \ne 0$, dan geldt dat $$A^{-1} = \frac{1}{\det(A)}\adj(A).$$
+	\paragraph{Stelling 2.27}
+		Door $n+1$ gegeven punten $(x_0, y_0), (x_1, y_1), \cdots (x_n, y_n)$ met $x_0 < x_1 < x_2 < \ldots < x_n$ gaat de grafiek van \textit{juist één} veeltermfunctie van graad hoogstens $n$. 
+		
+	\section{Vectorruimten}
+	
+	\paragraph{Definitie 3.2}
+		Een \textbf{commutatieve groep} is een verzameling $V$ met een bewerking (`optelling' of `som') $+: V \times V \to V$ zo dat voldaan is aan de eigenschappen
+		\begin{enumerate}
+			\item \textbf{associativitiet}: $(v_1 + v_2) + v_3 = v_1 + (v_2 + v_3)$ voor alle $v_1, v_2, v_3 \in V$;
+			\item \textbf{neutraal element}: er bestaat in $V$ een element, $0$ genoteerd, zodanig dat $0+v = v = v+0$ voor alle $v \in V$;
+			\item \textbf{tegengesteld element}: voor elk element $v$ in $V$ bestaat er een element $v^{\prime} \in V$ zodat $v + v^{\prime} = 0 =v^{\prime}` +v$;
+			\item \textbf{commutativiteit}: $v_1 + v_2 = v_2 +v_1$ voor alle $v_1,v_2 \in V$.
+		\end{enumerate}
+		We schrijven kort: $(V, +)$ is een commutatieve groep.
+	\paragraph{Definitie 3.3}
+		Een \textbf{reële vectorruimte}, $(\mathbb{R}, V, +)$ genoteerd, bestaat uit een commutatieve groep $(V, +)$ samen met een uitwendige bewerking, de \textbf{scalaire vermenigvuldiging}, $$\mathbb{R} \times V \to V: (\lambda, v) \mapsto \lambda \cdot v$$ zodat ook de volgende eigenschappen gelden:
+		\begin{enumerate}
+			\item \textbf{distributiviteit-1}: $\lambda \cdot (v + w) = \lambda \cdot v + \lambda \cdot w$ voor alle $\lambda \in \mathbb{R}$ en voor alle $v, w \in V$;
+			\item \textbf{distributiviteit-2}: $(\lambda_1 + \lambda_2)\cdot v= \lambda_1 \cdot v + \lambda_2 \cdot v$ voor alle $\lambda_1, \lambda_2 \in \mathbb{R}$ en voor alle $v \in V$;
+			\item \textbf{gemengde associativiteit}: $\lambda_1 \cdot (\lambda_2 \cdot v)=(\lambda_1 \cdot \lambda_2) \cdot v$ voor alle $\lambda_1, \lambda_2 \in \mathbb{R}$ en voor alle $v \in V$;
+			\item \textbf{coëfficiënt $1$}: $1 \cdot v = v$ voor alle $v \in V$.
+		\end{enumerate}		
+		De getallen $\lambda$ (in $\mathbb{R}$) noemen we de \textbf{coëfficiënten} of \textbf{scalaren}; de elementen $v$ (in $V$) noemen we de \textbf{vectoren}. Het neutraal element $0$ voor de optelling noemen we de \textbf{nulvector}. Dikwijls schrijven we kortweg $\lambda v$ in plaats van $\lambda \cdot v$ voor de scalaire vermenigvuldiging.
+	\paragraph{Lemma 3.7}
+		In een vectorruimte $(\mathbb{R}, V,+)$ geldt voor alle vectoren $v,w,x \in V$ de implicatie $$v+x=w+x \Rightarrow v=w.$$	
+	\paragraph{Lemma 3.8}
+		In een vectorruimte $(\mathbb{R}, V,+)$ geldt voor alle vectoren $v \in V$ en voor alle $\lambda \in \mathbb{R}$:
+		\begin{enumerate}
+			\item $0v = 0 = \lambda0$;
+			\item $-(1)v = -v = 1(-v)$;
+			\item $(-\lambda)v = -(\lambda v) = \lambda (-v)$.
+		\end{enumerate}
+	\paragraph{Definitie 3.10} 
+		Als $(\mathbb{R}, V, +)$ een vectorruimte is en $U$ een deelverzameling van $V$ zodat $(\mathbb{R}, U, +)$, met dezelfde optelling en scalaire vermenigvuldiging als $V$, ook een vectorruimte is, dan noemen we $(\mathbb{R}, U, +)$ (vaak kortweg $U$) een (lineaire) \textbf{deelvectorruimte} of (lineaire) \textbf{deelruimte} van $(\mathbb{R}, V, +)$.
+	\paragraph{Stelling 3.11}
+		Zij gegeven de vectorruimte $(\mathbb{R}, V, +)$. Een deelverzameling $U$ van $V$ is een deelruimte als en slechts als
+		\begin{itemize}
+			\item[$\sqcdot$] $U \ne \emptyset$
+			\item[$\sqcdot$] voor alle $x, y \in U$ geldt: $x+y\in U$,
+			\item[$\sqcdot$] voor alle $x \in U$ en $r \in \mathbb{R}$ geldt : $rx \in U$,
+		\end{itemize}
+		of, equivalent hiermee,
+		\begin{itemize}
+		\item[$\sqcdot$] $U \ne \emptyset$,
+		\item[$\sqcdot$] voor alle $x,y \in U$ en voor alle $r,s \in \mathbb{R}$ geldt: $rx +sy \in U$.
+		\end{itemize}
+	\paragraph{Propositie 3.14}
+		De doorsnede van een aantal deelruimten van een vectorruimte $(\mathbb{R}, V, +)$ is opnieuw een deelruimte van V.
+	\paragraph{Definitie 3.15}
+		Zij $(\mathbb{R}, V, +)$ een vectorruimte en $D$ een niet-lege deelverzameling van $V$. De deel(vector)ruimte van $(\mathbb{R}, V, +)$ \textbf{voortgebracht door} $D$ of \textbf{opgespannen door} $D$ is $$\left\{\sum\limits_{i=1}^{n} \lambda_i v_i | n\in \mathbb{N}, x_1, \ldots , x_n \in D \text{ en } \lambda_1, \ldots, \lambda_n \in \mathbb{R}\right\}.$$ We noteren $\vct(D)$, $\Span(D)$ of $\mathord{<} D \mathord{>}$ voor deze vectorruimte. Als $D$ eindig is, zeg $D = \{x_1 , \ldots , x_k\}$, dan noteren we deze deelruimte ook als $\vct \{x_1 , \ldots , x_k\}$, enzovoort. Als $D = \emptyset$ spreken we af dat $\vct(D) = \{0\}$.
+	\paragraph{Definitie 3.19}
+		Veronderstel dat $(\mathbb{R}, V, +)$ een vectorruimte is, met deelvectorruimten $U$ en $W$. Dan is de verzameling $$\{u+w |u\in U, w\in W\}$$ een deelvectorruimte van $V$. Deze deelruimte noemen we de \textbf{somruimte} of \textbf{som} van $U$ en $W$ en noteren we $U+W$. Meer algemeen, als $U_1, U_2, \ldots , U_k$ deelruimten zijn van $V$, dan definiëren we de somruimte $$\sum\limits_{j=1}^k U_j = U_1 + U_2 + \ldots + U_k = \left\{\sum_{i=1}^k |u_i\in U_i \text{ voor alle } i= 1, \ldots, k\right\}.$$
+	\paragraph{Definitie 3.20}
+		Een somruimte $\sum_{j=1}^k U_j$ noemen we een \textbf{directe som} als elk element van $\sum_{j=1}^k U_j$ op precies één manier te schrijven valt als som van vectoren uit elk van de deelruimten. Dit wil zeggen dat er voor alle $v \in \sum_{j=1}^k U_j$ \textit{unieke vectoren} $u_1 \in U_1, u_2 \in U_2, \ldots, u_k \in U_k$ \textit{bestaan zo dat} $$v = u_1 + u_2 + \ldots + u_k.$$ In dat geval noteren we $\bigoplus_{j=1}^k U_j = U_1 \oplus U_2 \oplus \ldots \oplus U_k$. In een situatie met slechts twee deelruimten $U$ en $W$ schrijven we een directe som dus als $U \oplus W$.
+	\paragraph{Propositie 3.23}
+		Gegeven is een vectorruimte $(\mathbb{R}, V, +)$.
+		\begin{enumerate}
+			\item Zij $U_1 $ en $U_2$ deelruimten van $V$. Dan geldt dat $W = U_1 \oplus U_2$ als en slechts als
+			\begin{itemize}
+				\item[(a)] $W = U_1 + U_2$ én
+				\item[(b)] $U_1 \cap U_2 = \{0\}$
+			\end{itemize}
+			\item Algemener, zij $U_1, U_2, \ldots , U_k$ deelruimten van $V$. Dan is $$W = U_1 \oplus U_2 \oplus \ldots \oplus U_k$$
+			als en slechts als
+			\begin{itemize}
+				\item[(a)] $W = U_1 + U_2 + \ldots +U_k$ én
+				\item[(b)] voor alle $i = 1, \ldots , k$ geldt dat $$U_i \cap (U_1 + \ldots + U_{i-1} + U_{i+1} + \ldots + U_k) = \{0\}.$$
+			\end{itemize}
+		\end{enumerate}
+	\paragraph{Definitie 3.26}
+		Gegeven een vectorruimte $(\mathbb{R}, V, +)$. Een deelverzameling $D$ van $V$ noemen we \textbf{lineair afhankelijk} of \textbf{niet vrij} als er een vector bestaat in $D$ die te schrijven valt als een lineaire combinatie van (eindig veel) andere vectoren vand $D$. We noemen $D$ \textbf{lineair onafhankelijk} of \textbf{vrij} als $D$ niet lineair afhankelijk is, met andere woorden als er geen enkele vector in $D$ bestaat die een lineaire combinatie is van de andere vectoren van $D$.
+	\paragraph{Propositie 3.27}
+		Gegeven is een vectorruimte $(\mathbb{R}, V, +)$ en een niet-lege deelverzameling $D$. Dan is $D$ vrij als en slechts als de enige lineaire combinatie van vectoren in $D$ die de nulvector oplevert, die lineaire combinatie is waarin alle coëfficiënten nul zijn. In symbolentaal wordt dit: als en slechts als voor elke $k\in \mathbb{N}_0$, voor willekeurige $\lambda_1$, $\lambda_2, \ldots \lambda_k \in \mathbb{R}$ en willekeurig onderling verschillende $v_1, v_2, \ldots, v_k \in D$ geldt:
+		$$\left(\sum\limits_{i=1}^k \lambda_iv_i=0 \Leftrightarrow \lambda_1 = \lambda_2 = \ldots = \lambda_k = 0 \right).$$
+		Indien $D$ eindig is, zeg $D = \{w_1,w_2,\ldots ,w_n\}$ is dus $D$ vrij (anders gezegd: zijn de vectoren $w_1,w_2,\ldots ,w_n$ lineair onafhankelijk) als en slechts als voor willekeurige $\lambda_1$, $\lambda_2, \ldots \lambda_k \in \mathbb{R}$ geldt:
+		$$\left(\sum\limits_{i=1}^n \lambda_iv_i=0 \Leftrightarrow \lambda_1 = \lambda_2 = \ldots = \lambda_n = 0 \right).$$
+	\paragraph{Definitie 3.31}
+		Voor een gegeven vectorruimte $(\mathbb{R}, V, +)$ noemen we een deelverzameling $D$ van $V$ \textbf{voortbrengend} als $\vct(D) =V$. Men zegt ook soms dat in dat geval $V$ \textbf{opgespannen wordt} door $D$. Als er een eindige deelverzameling $D$ bestaat die $V$ voortbrengt, dan noemen we de vectorruimte $V$ \textbf{eindig voortgebracht}.
+	\paragraph{Definitie 3.33}
+		In een vectorruimte $(\mathbb{R}, V, +)$ is een deelverzameling $\beta$ een \textbf{basis} (van $V$) als $\beta$ voortbrengend en vrij is. Als $\beta = \{v_1,\ldots ,v_n\}$ eindig is, zeggen we ook dat de vectoren $v_1, \ldots ,v_n$ een basis vormen van $V$.
+	\paragraph{Stelling 3.35 (Lemma van Steinitz)}
+		Zij $(\mathbb{R}, V, +)$ een vectorruimte. Dan geldt: \\
+		$(1)$ als er een voortbrengend deel bestaat voor $V$ met $m$ elementen, dan is elke deelverzameling van $V$ met \textit{meer} dan $m$ elementen lineair afhankelijk; \\
+		$(2)$ als er een vrij deel bestaat met $n$ elementen, dan is elke deelverzameling van $V$ met \textit{minder} dan $n$ elementen niet voortbrengend voor $V$.
+	\paragraph{Gevolg 3.36}
+		Als er in een vectorruimte $(\mathbb{R}, V, +)$ een voortbrengend deel is voor $V$ met $m$ elementen en een vrije deelverzameling met $n$ elementen, dan is $n \le m$.
+	\paragraph{Gevolg 3.37}
+		Als $(\mathbb{R}, V, +)$ een vectorruimte is die een basis heeft met $n$ vectoren, dan heeft elke ander basis van $V$ ook $n$ vectoren.
+	\paragraph{Definite 3.38}
+		Zij $(\mathbb{R}, V, +)$ een (niet-triviale) vectorruimte. Als $V$ een eindige basis heeft noemt men het aantal elementen van die basis de \textbf{dimensie} van $V$, genoteerd als $\dim_{\mathbb{R}}V$. In het geval van een complexe vectorruimte $(\mathbb{C}, V, +)$ noteren we $\cdim V$ voor de dimensie. Er wordt ook wel $\dim V$ genoteerd als het uit de context duidelijk is over welke coëfficiënten het gaat. Als $V$ geen eindige basis heeft zeggen we dat $V$ oneindigdimensionaal is. We spreken af dat de triviale vectorruimte $\{0\}$ dimensie $0$ heeft.
+	\paragraph{Stelling 3.40}
+		Veronderstel dat $(\mathbb{R}, V, +)$ een vectorruimte is van dimensie $n$. Dan geldt:
+		\begin{enumerate}
+			\item elke vrije verzameling van $V$ kan uitgebreid worden tot een basis van $V$;
+			\item elke eindige voortbrengende verzameling van $V$ kan (door het schrappen van vectoren) gereduceerd worden tot een basis voor $V$.
+		\end{enumerate}
+	\paragraph{Stelling 3.44}
+		Zij $(\mathbb{R}, V, +)$ een $n$-dimensionale vectorruimte en $v_1,v_2,\ldots ,v_n \in V$. Dan geldt dat $\{v_1,v_2,\ldots ,v_n \in V\}$ een basis is van $V$
+		\begin{itemize}
+			\item[$\Leftrightarrow$] een vrij deel is van $V$;
+			\item[$\Leftrightarrow$] een voortbrengend deel is $V$. 
+		\end{itemize}
+	\paragraph{Stelling 3.45}	
+		Zij $(\mathbb{R}, V, +)$ een vectorruimte en $\beta \subset V$. Dan zijn de volgende beweringen equivalent:
+		\begin{enumerate}
+			\item $\beta$ is een basis van V;
+			\item $\beta$ is maximaal vrij (dit wil zeggen: $\beta$ is vrij en elke deelverzameling die $\beta$ strikt omvat, is niet meer vrij);
+			\item $\beta$ is minimaal voortbrengend (dit wil zeggen: $\beta$ is voortbrengend voor $V$ en elke strikte deelverzameling van $\beta$ is niet meer voortbrengend voor $V$).
+		\end{enumerate}
+	\paragraph{Stelling 3.47}
+		Zij	$(\mathbb{R}, V, +)$ een eindigdimensionale vectorruimte en $U$ een deelruimte van $V$. Dan geldt:
+		\begin{itemize}
+			\item[(1)] $U$ is eindig voortgebracht en $\dim U \le \dim V$,
+			\item[(2)] $\dim U = \dim V \Leftrightarrow U=V$.
+		\end{itemize}
+	\paragraph{Stelling 3.49}
+		Zij	$(\mathbb{R}, V, +)$ een vectorruimte en veronderstel dat $\beta = \{e_1,e_2,\ldots ,e_n\}$ een basis is van $V$. Dan kan elke vector $v$ op een \textit{unieke} manier als lineaire combinatie van de basisvectoren uitgedrukt worden. Er ontstaat derhalve een bijectieve afbeelding
+		$$\co_\beta : V \to \mathbb{R}^n: v \mapsto \co_\beta(v)$$
+		die $v$ afbeeldt op het stel coëfficiënten dat correspondeert me $v$ ten opzichte van de basis $\beta$. Deze afbeelding noemen we de \textbf{coördinaatafbeelding bepaald door} $\beta$.
+	\paragraph{Stelling 3.53}	
+		Als de vectorruimte $V$ eindigdimensionaal is, dan geldt voor willekeurige deelruimten $U$ en $W$ van $V$ dat
+		$$\dim (U + W) + \dim(U \cap W) = \dim U + \dim W.$$
+	\paragraph{Stelling 3.56}
+		We veronderstellen dat de vectorruimte $V$ eindigdimensionaal is. Zij $U_1, U_2, \ldots , U_k$ deelruimten van $V$ zodat $V = U_1 \oplus U_2 \oplus \ldots \oplus U_k$. Als voor elke $i$ de verzameling $\beta_i (\subset U_i)$ een basis is van $U_i$, dan is $\beta_1 \cup \beta_2 \cup \cdots \cup \beta_k = \cup_{i=1}^k \beta_i$ een basis van $V$ en bijgevolg geldt dat $$\dim V = \sum\limits_{i=1}^k\dim U_i.$$ 
+	\paragraph{Definitie 3.58}
+		In de vectorruimte $(\mathbb{R}, V, +)$ is een deelruimte $W$ een \textbf{complementaire deelruimte} van de deelruimte $U$ als $V = U\oplus W$.
+	\paragraph{Stelling 3.60}
+		Als de vectorruimte $(\mathbb{R}, V, +)$ eindigdimensionaal is, dan heeft elke deelruimte van $V$ een complementaire deelruimte.
+	\paragraph{Definitie 3.61}
+		Zij $$\begin{pmatrix}
+			a_{11} & a_{12} & \cdots & a_{1n} \\
+			a_{21} & a_{22} & \cdots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{m1} & a_{m2} & \cdots & a_{mn} 
+		\end{pmatrix} = \begin{pmatrix} r_1 \\ r_2 \\ \vdots \\ r_m \end{pmatrix} = \begin{pmatrix}
+		c_1 & c_2 & \cdots &c_n
+		\end{pmatrix} \in \mathbb{R}^{m\times n}.$$
+		Elke rij $r_i$ behoort dan tot $\mathbb{R}^n$ en elke kolom $c_j$ tot $\mathbb{R}^m$. We definiëren de volgende vectorruimten:
+		\begin{enumerate}
+			\item $R(A) = \vct\{r_1,r_2,\ldots ,r_m\}$, \textbf{de rijruimte van} $A$; 
+			\item $C(A) = \vct\{c_1,c_2,\ldots ,c_n\}$, \textbf{de kolomruimte van} $A$;
+			\item $N(A) = \{X \in \mathbb{R}^n | A \cdot X = 0\}$; \textbf{de nulruimte van} $A$.
+		\end{enumerate}
+		De dimensie van de rijruimte van $A$ heet de \textbf{rijrang van} $A$. De dimensie van de kolomruimte van $A$ heet de \textbf{kolomrang van} $A$. (De dimensie van de nulruimte van $A$ noemt men soms de \textbf{nulliteit van} $A$.)
+		\\ \textit{Stiekem zijn de rijrang en kolomrang hetzelfde, maar dat weet je nog niet}.
+	\paragraph{Stelling 3.64}
+		Veronderstel dat $U$ de rijgereduceerde matrixvorm is van $A \in \mathbb{R}^{m\times n}$ (of een willekeurige trapvorm verkregen uit $A$ door Gauss-eliminatie). Dan geldt
+		\begin{enumerate}
+			\item $N(A) = N(U)$,
+			\item $R(A) = R(U)$.
+		\end{enumerate}
+		Bovendien geldt dat $$\rdim N(A) + \rdim R(A) = n,$$ wat in woorden uitgedrukt betekent: $$\text{aantal kolommen van de matrix } A = \text{nulliteit van } A + \text{rijrang van } A.$$
+	\paragraph{Stelling 3.65}
+		Veronderstel dat $A$ en $B$ matrices zijn zo dat het product $AB$ bepaald is. Dan geldt:
+		\begin{enumerate}
+			\item $N(AB) \supset N(B)$;
+			\item $C(AB) \subset C(A)$;
+			\item $R(AB) \subset R(B)$.
+		\end{enumerate}
+	\paragraph{3.7 Toemaatje over velden is extra en staat niet in deze samenvatting.} 
+		\phantom{d}
+			
+	\section{Lineaire Afbeeldigen en Lineaire Transformaties}
+	
+	\paragraph{Definitie 4.1}
+		Veronderstel dat $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ twee vectorruimten zijn. Een afbeelding $L: V \to W$ noemen we een \textbf{lineaire afbeelding} als
+		\begin{center}
+			\begin{itemize}
+				\item[(1)] $L(v_1+v_2) = L(v_1) +L(v_2)$ voor alle $v_1,v_2 \in V$;
+				\item[(2)] $L(\lambda v) = \lambda L(v)$ voor alle $v\in V$ en voor alle $\lambda \in \mathbb{R}$. 
+			\end{itemize}
+		\end{center}
+		Anders gezegd is een afbeelding lineair als ze `compatibel is met de twee bewerkingen in een vectorruimte'. \\ Een \textbf{lineaire transformatie} is een lineaire afbeelding van een vectorruimte \textit{naar zichzelf}. \\ Een lineaire afbeelding $(\mathbb{R}, V, +) \to (\mathbb{R}, \mathbb{R}, +)$ wordt een \textbf{lineaire vorm} genoemd. \\ Voor complexe vectorruimten hanteren we dezelfde definities, waarbij we $\mathbb{R}$ overal door $\mathbb{C}$ verbangen, en in het bijzonder $\lambda \in \mathbb{C}$ nemen in (2). 
+	\paragraph{Lemma 4.2}
+		Een afbeelding $L: V \to W$ tussen reële vectorruimten is een lineaire afbeelding als en slechts als $$L(\lambda_1 v_1 + \lambda_2 v_2) = \lambda_1 L(v_1 )+ \lambda_2 L(v_2) \text{ voor alle } \lambda_1, \lambda_2 \in \mathbb{R} \text{ en voor alle } v_1, v_2 \in V.$$
+	\paragraph{Gevolg 4.3}
+		Als $L: V \to W$ een lineaire afbeelding is, dan geldt:
+		\begin{enumerate}
+			\item[(1)] $L(0) = 0$ en $L(-v) = -L(v)$ voor elke vector $v \in V$;
+			\item[(2)] $L(\sum_{i=1}^{n} \lambda_i v_i) = \sum_{i=1}^{n} \lambda_i L(v_i)$ voor alle $\lambda_1, \ldots , \lambda_n \in \mathbb{R}$ en voor alle $v_1, \ldots , v_n \in V$ (met andere woorden: lineaire afbeeldingen `bewaren' lineaire combinaties);
+			\item[(3)] een lineaire afbeelding \textit{ligt volledig vast door de beelden van een basis}.
+		\end{enumerate}
+	\paragraph{Propositie 4.11}
+		Zij $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ vectorruimten.
+		\begin{enumerate}
+			\item Als $K$ en $L$ lineaire afbeeldingen zijn van $V$ naar $W$, dan is $K+L:V \to W:v \mapsto (K+L)(v) = K(v) + L(v)$ nog steeds een lineaire afbeelding. Analoog is voor elke $\lambda \in \mathbb{R}$ de afbeelding $\lambda K: V \to W: v \mapsto (\lambda K)(v) = \lambda K(v)$ eveneens lineair.
+			\item De verzameling van alle lineaire afbeeldingen van $V$ naar $W$ wordt met deze optelling en scalaire vermenigvuldiging een reële vectorruimte. 
+		\end{enumerate}
+	\paragraph{Definitie 4.12}
+		Als $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ vectorruimten zijn, dan noteren we $\rhom(V, W)$ voor de (eveneens reële) vectorruimte van alle lineaire afbeeldingen van $V$ naar $W$.
+	\paragraph{Stelling 4.13}
+			Zij $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ eindigdimensionale vectorruimten van dimensie respectievelijk $n$ en $m$. Na het kiezen van een basis $\beta_V$ in $V$ en $\beta_W$ in $W$ staat de vectorruimte van de lineaire afbeeldingen van $V$ naar $W$, namelijk $\rhom(V,W)$, in bijectief verband met de vectorruimte van de matrices $\mathbb{R}^{m\times n}$, meer specifiek via de lineaire afbeelding $$\rhom(V,W) \to \mathbb{R}^{m\times n}: L \mapsto L_{\beta_V}^{\beta_W}.$$ Hierbij correspondeert dus enerzijds de optelling van lineaire afbeeldingen met de optelling van matrices, en anderzijds het product met een scalar bij lineaire afbeeldingen met het product met een scalar voor matrices.
+	\paragraph{Stelling 4.14}
+		De samenstelling van twee lineaire afbeeldingen is opnieuw een lineaire afbeelding.
+	\paragraph{Definitie 4.16}
+		Als $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ vectorruimten zijn, dan noemen we een afbeelding $L: V \to W$ een \textbf{isomorfisme} als $L$ bijectief is en lineair. \\ In dat geval noemen we de vectorruimten $V$ en $W$ \textbf{isomorf}, en noteren we $V \cong W$.
+	\paragraph{Stelling 4.18}
+		Stel dat $L: V \to W$ een bijectieve lineaire afbeelding is van de vectorruimte $(\mathbb{R}, V, +)$ naar de vectorruimte $(\mathbb{R}, W, +)$. Dan is haar inverse afbeelding $K: W \to V$ ook een lineaire afbeelding. \\ \textit{Stiekem zijn $L$ en $K$ dus allebei isomorfismen, maar dat zeggen ze niet expliciet want logische opbouw van een cursus is overrated}.
+	\paragraph{Stelling 4.20}
+		Zij $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ eindigdimensionale vectorruimten. Dan geldt:
+		\begin{itemize}
+			\item[(1)] $V \cong W \Leftrightarrow \dim V = \dim W$ (\textit{eindigdimensionale reële vectorruimten zijn dus isomorf als en slechts als ze dezelfde dimensie hebben.});
+			\item[(2)] $V \cong \mathbb{R}^n \Leftrightarrow \dim V = n$. 
+		\end{itemize}
+	\paragraph{Propositie 4.23}
+			Zij $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ eindigdimensionale vectorruimten van dimensie $n$. Zij $L: V \to W$ een lineaire afbeelding en $A = L_{\beta_V}^{\beta_W} \in \mathbb{R}^{n\times n}$ de matrix van $L$ ten opzichte van gekozen basissen $\beta_V$ in $V$ en $\beta_W$ in $W$. Dan geldt: 
+			\begin{itemize}
+				\item[(1)] $L$ is een isomorfisme als en slechts als $A$ inverteerbaar is;
+				\item[(2)] Als $L$ een isomorfisme is, dan is $(L^{-1})_{\beta_V}^{\beta_W} = (L_{\beta_V}^{\beta_W})^{-1}$.
+			\end{itemize}
+	\paragraph{Definitie 4.26}
+		Twee vierkante matrices $A$ en $B$ (in $\mathbb{R}^{n\times n}$), noemen we \textbf{gelijkvormig} (Engels: similar) als er een inverteerbare matrix $P \in \mathbb{R}^{n\times n}$ bestaat, zo dat $B = P^{-1} \cdot A \cdot P$.
+	\paragraph{Gevolg 4.27}
+		De matrix van een lineaire transformatie van een (eindigdimensionale) vectorruimte $(\mathbb{R}, V,+)$ wordt door een verandering van basis in $V$ omgezet in een gelijkvormige matrix.
+	\paragraph{Definitie 4.31}
+		Zij $L: (\mathbb{R}, V, +) \to (\mathbb{R}, W, +)$ een lineaire afbeelding. De \textbf{kern} (Engels: kernel) van $L$, genoteerd als $\ker(L)$ (of $\ker L$), is de deelruimte
+		$$\ker(L) = \{v\in V | L(v) = 0\}.$$ Het \textbf{beeld} (Engels: image) van $L$ genoteerd als $\Ima(L)$ (of $\Ima L$) of $L(V)$, is de deelruimte $$\Ima(L) = \{w\in W| \exists v \in V : L(v) = w\}.$$ 
+		De dimensie van $\ker(L)$ noemen we soms de \textbf{nulliteit} van $L$. \\
+		De dimensie van $\Ima(L)$ noemen we de \textbf{rang} van $L$. 
+	\paragraph{Propositie 4.32}	
+		Met de notatie van vorige definitie is kern van $L$ een deelvectorruimte van $V$ en het beeld van $L$ een deelvectorruimte van $W$. In het bijzonder is $\Ima(L)$ de vectorruimte voortgebracht door de beelden van een basis van $V$.
+	\paragraph{Stelling 4.34}
+		Zij $L: V \to W$ een lineaire afbeelding. Dan geldt dat $$L \text{ injectief is als en slecht als } \ker(L) = \{0\}.$$
+	\paragraph{Stelling 4.36 (Dimensiestelling voor Lineaire Afbeeldingen)}
+		Als $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ vectorruimten zijn, waarvan $V$ eindigdimensionaal is, en als $L: V \to W$ een lineaire afbeelding is, dan geldt dat $$\rdim V = \rdim(\ker L) + \rdim(\Ima L).$$
+	\paragraph{Stelling 4.39}
+		Zij $(\mathbb{R}, V, +)$ en $(\mathbb{R}, W, +)$ eindigdimensionale vectorruimten en $L: V \to W$ een lineaire afbeelding. Dan bestaat er een basis in $V$ en een basis in $W$ zodat de matrix van $L$ ten opzichte van deze basissen gegeven is door een matrix van de vorm $$\begin{pmatrix}
+			1 &  0 & \cdots & 0 & 0 & \cdots & 0 \\
+			0 &  1 & \cdots & 0 & 0 & \cdots & 0 \\
+			\vdots & & & & & & \vdots \\
+			0 &  0 & \cdots & 1 & 0 & \cdots & 0 \\
+			0 &  0 & \cdots & 0 & 0 & \cdots & 0 \\
+			\vdots & & & & & & \vdots \\
+			0 &  0 & \cdots & 0 & 0 & \cdots & 0 
+		\end{pmatrix} = \begin{pmatrix}
+		\mathbb{I}_r & 0 \\ 0 & 0
+		\end{pmatrix}.$$
+		Hierin is $r$ de rang van de lineaire afbeelding $L$.
+	\paragraph{Gevolg 4.40}
+		Als $L: V \to V: v \mapsto L(V)$ een lineaire transformatie is van de eindigdimensionale vectorruimte $(\mathbb{R}, V, +)$, dan geldt $$L \text{ is injectief } \Leftrightarrow L \text{ is surjectief } \Leftrightarrow L \text{ is bijectief.}$$
+	\paragraph{Gevolg 4.44}
+		Veronderstel dat $A$ en $B$ matrices zijn, van afmetingen zo dat $AB$ bepaald is. Dan geldt $$\text{rang van } AB \le \min\{\text{rang van } A, \text{ rang van } B\}.$$
+	\paragraph{Stelling 4.45}
+		Zij $A \in \mathbb{R}^{m\times n}$, dan zijn volgende beweringen equivalent:
+		\begin{itemize}
+			\item[(a)] voor elke $b \in \mathbb{R}^m$ is het stelsel $A \cdot X = b$ oplosbaar;
+			\item[(b)] $C(A) = \mathbb{R}^m$;
+			\item[(c)] de rang van $A$ is gelijk aan $m$;
+			\item[(d)] de rijen van $A$ zijn lineair onafhankelijk.
+		\end{itemize}
+	\paragraph{Stelling 4.46}
+		Zij $A \in \mathbb{R}^{m\times n}$, dan zijn volgende beweringen equivalent:
+		\begin{itemize}
+			\item[(a)] voor elke $b \in \mathbb{R}^m$ heeft het stelsel $A \cdot X = b$ hoogstens één oplossing;
+			\item[(b)] $N(A) = \{0\}$;
+			\item[(c)] de rang van $A$ is gelijk aan $n$;
+			\item[(d)] de kolommen van $A$ zijn lineair onafhankelijk.
+		\end{itemize}
+	\paragraph{Stelling 4.47}
+		Zij $A \in \mathbb{R}^{n\times n}$ een vierkante matrix, dan zijn volgende beweringen equivalent:
+		\begin{itemize}
+			\item[(a)] $A$ is inverteerbaar;
+			\item[(b)] $\det(A) \ne 0$;
+			\item[(c)] de rang van $A$ is gelijk aan $n$;
+			\item[(d)] de rijen van $A$ zijn lineair onafhankelijk;
+			\item[(e)] de kolommen van $A$ zijn lineair onafhankelijk.
+		\end{itemize}
+	\paragraph{Stelling 4.48 (Oplosbaarheid van een lineair probleem)}
+		Gegeven is de lineaire afbeelding $L: (\mathbb{R}, V, +) \to (\mathbb{R}, W, +)$ die het lineair probleem `$L(x) = w_0$' bepaalt. Dit lineair probleem heeft een oplossing als en slechts als $w_0 \in \Ima(L)$ (\textit{oplosbaarheidsvoorwaarde}). Veronderstel dat het probleem oplosbaar is en dat $x_p$ een oplossing is voor `$L(x) = w_0$'. Dan wordt de (volledige) oplossingsverzameling gegeven door $$x_p + \ker(L) = \{x_p + x_h | x_h \in \ker(L)\}.$$ De dimensie van $\ker(L)$ wordt het \textit{aantal vrijheidsgraden} van het lineair probleem genoemd, en $x_p$ een \textbf{particuliere oplossing} van het probleem. In het bijzonder is het homogeen probleem $(w_0 = 0)$ steeds oplosbaar en vormt de oplossingsverzameling hiervoor de deelvectorruimte $\ker(L)$.
+	
+	\section{Eigenwaarden, Eigenvectoren en Diagonaliseerbaarheid}
+	
+	\paragraph{Definitie 5.1}
+		Verondersteld dat $A$ een $(n\times n)$-matrix is met reële componenten. Een \textit{niet-nulvector} $v\in \mathbb{R}^n$ noemen we een \textbf{eigenvector van} $A$ als er een $\lambda \in \mathbb{R}$ bestaat, zo dat $A\cdot v = \lambda v$ (waarbij we $v$ beschouwen als kolomvector). Deze waarde $\lambda$ noemen we de \textbf{eigenwaarde horend bij de eigenvector} $v$. De veelterm $\varphi_A(X)=\det(X \mathbb{I}_n -A)$ noemen we de \textbf{karakteristieke veelterm} van de matrix $A$.
+	\paragraph{Stelling 5.2}
+		Gegeven is een vierkante matrix $A \in \mathbb{R}^{n \times n}$. Een getal $\lambda \in \mathbb{R}$ is een eigenwaarde van $A$ als en slechts als $\lambda$ een nulpunt is van de karakteristieke veelterm van $A$.
+	\paragraph{Definitie 5.3}
+		Veronderstel at $L:V\to W$ een lineaire transformatie is van de vectorruimte $(\mathbb{R}, V, +)$. Een \textit{niet-nulvector} $v \in V$ noemen we een \textbf{eigenvector van} $L$ (Engels: eigenvector) als er een $\lambda \in \mathbb{R}$ bestaat, zo dat $L(v) = \lambda v$. Deze coëfficiënt $\lambda$ noemen we de \textbf{eigenwaarde horend bij de eigenvector} $v$ van $L$ (Engels: eigenvalue).
+	\paragraph{Definitie 5.7}
+		Een vierkante matrix $A \in \mathbb{R}^{n \times n}$ noemen we \textbf{diagonaliseerbaar} als $A$ gelijkvormig is met een diagonaalmatrix. \\ Een lineaire transformatie $L: (\mathbb{R}, V, +)\to (\mathbb{R}, V, +)$ noemen we \textbf{diagonaliseerbaar} als V een basis heeft die volledig bestaat uit eigenvectoren van $L$.
+	\paragraph{Stelling 5.8}
+		Een vierkante matrix $A \in \mathbb{R}^{n \times n}$ is diagonaliseerbaar als en slechts als $\mathbb{R}^n$ een basis heeft die volledig bestaat uit eigenvectoren van $A$.
+	\paragraph{Stelling 5.9}
+		Gelijkvormige matrices hebben dezelfde karakteristieke veelterm, dezelfde determinant en hetzelfde spoor.
+	\paragraph{Gevolg 5.10}	
+		De karakteristieke veelterm, de determinant en het spoor van een matrix van een lineaire transformatie van een eindigdimensionale vectorruimte zijn onafhankelijk van de gekozen basis. Met andere woorden, alle matrixvoorstellingen van dezelfde lineaire transformatie hebben, naast dezelfde determinant, ook dezelfde karakteristieke veelterm en hetzelfde spoor. \\\\ Zij $L: V \to V$ een lineaire transformatie van de eindigdimensionale reële vectorruimte $(\mathbb{R}, V, +)$. Dan noemen we de karakteristieke veelterm van de matrixvoorstelling $L_\alpha^\alpha$, voor eender welke basis $\alpha$ van $V$, de karakteristieke veelterm van $L$, genoteerd als $\varphi_L$. Op dezelfde manier spreken we van de determinant van $L$ en van \textit{het} spoor van $L$. We noteren bijgevolg ook $\det(L)$ en $\Tr(L)$.
+	\paragraph{Definitie 5.12}	
+		Zij $L: V \to V$ een lineaire transformatie van de reële vectorruimte $(\mathbb{R}, V, +)$. Het \textbf{spectrum} van $L$ is de verzameling van de eigenwaarden van $L$ en is dus een deelverzameling van $\mathbb{R}$. We noteren $\Spec(L)$ voor het spectrum van $L$.
+	\paragraph{Definitie 5.13}
+		De \textbf{algebraïsche multipliciteit} van een eigenwaarde $\lambda$ van een lineaire transformatie $L$ van een eindigdimensionale vectorruimte is de multipliciteit van $\lambda$ als nulpunt van de karakteristieke veelterm $\varphi_L(X)$. We noteren $m(x)$ voor deze algebraïsche multipliciteit.
+	\paragraph{Definitie 5.14}
+		Zij $L: V \to V$ een lineaire transformatie en zijn $\lambda \in \Spec(L)$. Dan is de verzameling $\{v\in V|L(v)=\lambda v\}$ \textit{een deelruimte van} $V$, die we \textbf{eigenruimte van de eigenwaarde} $\lambda$ noemen (Engels: eigenspace). We noteren $E_\lambda$ voor de eigenruimte van de eigenwaarde $\lambda$. Als $E_\lambda$ eindigdimensionaals is noemen we $\rdim E_\lambda$ de \textbf{meetkundige multipliciteit} van de eigenwaarde $\lambda$. We noteren $d(\lambda)$ voor deze meetkundige multipliciteit.
+	\paragraph{Stelling 5.16}
+		Veronderstel dat $L: V \to V$ een lineaire transformatie is van de eindigdimensionale vectorruimte $(\mathbb{R}, V,+)$, met spectrum $\Spec(L) = \{\lambda_1,\lambda_2,\ldots, \lambda_k\}$. Dan geldt, voor elke eigenwaarde $\lambda_i$:
+		\begin{itemize}
+			\item[(1)] $m(\lambda_i) \ge 1$; 
+			\item[(2)] $d(\lambda_i) \ge 1$;
+			\item[(3)] $d(\lambda_i) \le m(\lambda_i)$.
+		\end{itemize}
+	\paragraph{Stelling 5.18}	
+		Veronderstel dat $L: V \to V$ een lineaire transformatie is van de eindigdimensionale vectorruimte $(\mathbb{R}, V, +)$, en veronderstel dat $\lambda_1,\lambda_2,\ldots, \lambda_k$ onderling verschillende eigenwaarden zijn van $L$, telkens met bijhorende eigenvectoren $v_1,v_2,\ldots ,v_k$. Dan is de verzameling $\{v_1,v_2,\ldots ,v_k\}$ lineair onafhankelijk.
+	\paragraph{Definitie 5.19}
+		Het spectrum van een lineaire transformatie $L: V \to V$ van een vectorruimte $(\mathbb{R}, V,+)$ van dimensie $n$ heet \textbf{enkelvoudig} (Engels: simple) als $\# \Spec(L)=n$. \\ (Dit betekent dat $L$ precies $n$ verschillende eigenwaarden heeft, elk met algebraïsche multipliciteit gelijk aan $1$.)
+	\paragraph{Gevolg 5.20}
+		Een lineaire transformatie met enkelvoudig spectrum is diagonaliseerbaar.
+	\paragraph{Lemma 5.22}	
+		Indien een lineaire transformatie $L$ van een eindigdimensionale vectorruimte $(\mathbb{R},V,+)$ diagonaliseerbaar is, dan moet de karakteristieke veelterm van $L$ volledig ontbinden als product van eerstegraadsfactoren.
+	\paragraph{Stelling 5.23}
+		Zij $(\mathbb{R},V,+)$ een vectorruimte van dimensie $n$ en zij $L$ een lineaire transformatie van $V$, waarvan de karakteristieke veelterm $\varphi_L$ volledig ontbindt (over $\mathbb{R}$) als product van eerstegraadsfactoren. Stel dat $\Spec(L)= \{\lambda_1,\lambda_2,\ldots, \lambda_k\}$. Dan is $L$ diagonaliseerbaar als en slechts als voor elke eigenwaarde $\lambda_i$ geldt dat $d(\lambda_i)=m(\lambda_i)$.
+	\paragraph{Propositie 5.25}	
+		Zij $L$ een lineaire transformatie van een eindigdimensionale vectorruimte $(\mathbb{R},V,+)$, waarvan de karakteristieke veelterm volledig ontbindt (over $\mathbb{R}$) als product van eerstegraadsfactoren. Dan zijn de determinant en het spoor van $L$ gelijk aan respectievelijk het product en de som van alle eigenwaarden van $L$, waarbij elke eigenwaarde geteld wordt met haar algebraïsche multipliciteit.
+	\paragraph{Stelling 5.27 (Hoofdstelling van de Algebra - C.F. Gauss - \textit{Het bewijs wordt gelaten als super gemakkelijke oefening voor de lezer})}	
+		Elke veelterm in $\mathbb{C}[X]$ kan volledig ontbonden worden als product van eerstegraadsfactoren. Met andere woorden, als $p(X) \in \mathbb{C}[X]$ een veelterm is van graad $n$, dan bestaan er elementen $c \in \mathbb{C}_0, x_i \in \mathbb{C}$ en $m_i \in \mathbb{N}_0$, zo dat $$p(X)=c(X-x_1)^{m_1}(X-x_2)^{m_2}\cdots (X-x_k)^{m_k} \text{ waarbij } n = m_1 + m_2 + \cdots + m_k.$$
+	\paragraph{Definitie 5.29}	
+		Een vierkante matrix $A \in \mathbb{C}^{n\times n}$ noemen we \textbf{diagonaliseerbaar (over $\mathbb{C}$)} als $A$ gelijkvormig is (over $\mathbb{C}$) met een diagonaalmatrix, met andere woorden, als er een inverteerbare matrix $P \in \mathbb{C}^{n\times n}$ bestaat zodat $P^{-1}AP$ een (complexe) diagonaalmatrix is. \\ Een lineaire transformatie $L: (\mathbb{C},V,+) \to (\mathbb{C},V,+)$ noemen we \textbf{diagonaliseerbaar} als $V$ een basis heeft die volledig bestaat uit eigenvectoren van $L$.
+	\paragraph{Stelling 5.30}
+		Zij $(\mathbb{C},V,+)$ een vectorruimte van dimensie $n$ en zij $L$ een lineaire tranformatie van $V$. Stel dat $\Spec(L)=\{\lambda_1,\lambda_2\ldots,\lambda_k\}$. Dan is $L$ diagonaliseerbaar als en slechts als voor elke eigenwaarde $\lambda_i$ geldt dat $d(\lambda_i)=m(\lambda_i)$.
+	\paragraph{Propositie 5.31}	
+		Zij $L$ een lineaire transformatie van een eindigdimensionale vectorruimte $(\mathbb{C},V,+)$. Dan zijn de determinant en het spoor van $L$ gelijk aan respectievelijk het product en de som van alle eigenwaarden van $L$, waarbij elke eigenwaarde geteld wordt met haar algebraïsche multipliciteit.
+	\paragraph{Stochastische matrices en Markovketens en Lesliematrices zijn niet gezien in de les, maar toch erg interessant.}	
+		
+	\section{Inproducten en Euclidische Ruimten}
+	
+	\paragraph{Definitie 6.1}
+		Zij $(\mathbb{R},V,+)$ een reële vectorruimte. Een \textbf{inproduct} (of \textit{inwendig product}) op $V$ is een afbeelding $$\langle \cdot , \cdot \rangle: V \times V \to \mathbb{R}: (v,w)\mapsto \langle v,w\rangle $$ die voldoet aan de volgende eigenschappen:
+		\begin{itemize}
+			\item[(1)]  $\langle \cdot , \cdot \rangle$ is \textbf{lineair in de eerste component}, dit wil zeggen dat $$\langle \lambda_1v_1+\lambda_2v_2 , w \rangle = \lambda_1\langle v_1 , w \rangle + \lambda_2 \langle v_2 , w \rangle$$ voor alle $\lambda_1 , \lambda_2 \in \mathbb{R}$, voor alle $v_1, v_2 \in V$ en voor alle $w \in V$;
+			\item[(2)] $\langle \cdot , \cdot \rangle$ is \textbf{symmetrisch}, dit wil zeggen dat $\langle v , w \rangle = \langle w , v \rangle$ voor alle $v,w \in V$;
+			\item[(3)]$\langle \cdot , \cdot \rangle$ is \textbf{positief}, dit wil zeggen dat $\langle v , v \rangle \ge 0$ voor alle $v \in V$;
+			\item[(4)]$\langle \cdot , \cdot \rangle$ is \textbf{definiet}, dit wil zeggen dat voor $v\in V$ geldt:
+			$$\langle v , v \rangle = 0 \Leftrightarrow v = 0 (\in V).$$ 
+		\end{itemize}
+		Voortaan spreken we van een inproductruimte $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ als een reële vectorruimte voorzien van een inproduct.
+	\paragraph{Definitie 6.3}
+		Zij $(\mathbb{C},V,+)$ een complexe vectorruimte. Een \textbf{Hermitisch product} op $V$ is een afbeelding $$\langle \cdot , \cdot \rangle: V \times V \to \mathbb{C}: (v,w)\mapsto \langle v,w\rangle $$ die voldoet aan de volgende eigenschappen:
+		\begin{itemize}
+			\item[(1')]  $\langle \cdot , \cdot \rangle$ is \textit{lineair in de eerste component}, dit wil zeggen dat $$\langle \lambda_1v_1+\lambda_2v_2 , w \rangle = \lambda_1\langle v_1 , w \rangle + \lambda_2 \langle v_2 , w \rangle$$ voor alle $\lambda_1 , \lambda_2 \in \mathbb{C}$, voor alle $v_1, v_2 \in V$ en voor alle $w \in V$;
+			\item[(2')] $\langle v , w \rangle = \overline{\langle w , v \rangle}$ voor alle $v,w \in V$;
+			\item[(3')] $\langle v , v \rangle \ge 0$ voor alle $v \in V$ \textit{(positief)};
+			\item[(4')] voor $v\in V$ geldt
+			$(\langle v , v \rangle = 0 \Leftrightarrow v = 0 (\in V))$ \textit{(definiet)}.
+		\end{itemize}
+		Voortaan spreken we van een Hermitische ruimte $(\mathbb{C},V,+, \langle \cdot , \cdot \rangle)$ als een complexe vectorruimte voorzien van een Hermitisch product.
+	\paragraph{Definitie 6.9}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte. Dan definiëren we, voor elke vector $v\in V$, de \textbf{lengte van} $v$ (of de \textbf{norm van} $v$), $\lVert v \rVert$ genoteerd, als $\lVert v \rVert = \sqrt{\langle v , v \rangle}$. Wanneer voor een vector $v$ geldt dat $\lVert v \rVert = 1$, dan noemen we $v$ \textbf{genormeerd} of een \textbf{eenheidsvector}. \\ Deze begrippen kan men evenzeer (en op identieke wijze) invoeren in een Hermitische ruimte $(\mathbb{C},V,+, \langle \cdot , \cdot \rangle)$.
+	\paragraph{Stelling 6.11}	
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte met bijhorende norm $$\lVert \cdot \rVert: V \to \mathbb{R}: v \mapsto \lVert v \rVert = \sqrt{\langle v , v \rangle}.$$ Dan geldt
+		\begin{itemize}
+			\item[(1)] voor alle $\lambda \in \mathbb{R}$ en $v \in V$ dat $\lVert \lambda v \rVert = |\lambda|\cdot \lVert v \rVert$;
+			\item[(2)] voor alle $v \in V$: $\lVert v \rVert \ge 0$ en ($\lVert v \rVert = 0 \Leftrightarrow v = 0$).
+		\end{itemize}
+	\paragraph{Definitie 6.13}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte (of $(\mathbb{C},V,+, \langle \cdot , \cdot \rangle)$ een Hermitische ruimte). Voor willekeurige vectoren $v,w \in V$ definiëren we $d(v,w) = \lVert v-w \rVert$ als de \textbf{afstand tussen $v$ en $w$}.
+	\paragraph{Stelling 6.14}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte.
+		\begin{itemize}
+			\item[(1)] Voor alle vectoren $v,w \in V$ geldt dat $$\lvert v , w \rvert \le \lVert v \rVert \cdot \lVert w \rVert.$$ Deze ongelijkheid is bekend als de \textbf{ongelijkheid van Cauchy-Schwarz}.
+			\item[(2)] Deze ongelijkheid is een gelijkheid als en slechts als $v$ en $w$ lineair afhankelijk zijn.
+		\end{itemize}
+	\paragraph{Definitie 6.16}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte en zij $v \ne 0$ en $w \ne 0$ elementen van $V$. De \textbf{hoek tussen $v$ en $w$} is de unieke hoek $\theta \in [0, \pi]$ waarvoor $$\cos \theta = \frac{\langle v , w \rangle}{\lVert v \rVert \cdot \lVert w \rVert}.$$ Willekeurige vectoren $v$ en $w$ noemen we \textbf{orthogonaal} of \textbf{loodrecht op elkaar} als $\langle v , w \rangle = 0$; we schrijven hiervoor $v \perp w$. \\ Als $v \ne 0$ en $w \ne 0$ geldt dus dat $v \perp w$ precies wanneer $\theta = \frac{\pi}{2}$.
+	\paragraph{Stelling 6.19}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte met bijhorende norm $\lVert \cdot \rVert$. Dan geldt voor alle $v,w \in V$ dat $$\lVert v+w \rVert \le \lVert v \rVert + \lVert w \rVert \textit{ (de driehoeksongelijkheid).}$$
+	\paragraph{Definitie 6.21}
+		Een eindigdimensionale inproductruimte noemen we een \textbf{Euclidische ruimte}. Een eindigdimensionale Hermitische ruimte noemen wee een \textbf{unitaire ruimte}.
+	\paragraph{Stelling 6.23}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte en zij $\alpha = \{v_1, v_2, \ldots ,v_k\}$ een deelverzameling van $V$ bestaande uit onderling twee aan twee orthogonale vectoren, allen verschillend van de nulvector (dus voor alle $i \ne j$ geldt dat $\langle v_i , v_j \rangle = 0$). Dan is $\alpha$ een vrije verzameling.
+	\paragraph{Stelling 6.24}	
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een Euclidische ruimte. Een basis $\beta = \{v_1, \ldots, v_n\}$ voor V, zo dat
+		\begin{itemize}
+			\item[(1)] $\langle v_i , v_j \rangle = 0$ voor alle indices $i \ne j$ en
+			\item[(2)] $\lVert v_i \rVert = 1$ voor alle $i$,
+		\end{itemize} 
+		noemen we een \textbf{orthonormale basis} van $V$. Indien we enkel $(1)$ eisen, spreken we van een \textbf{orthogonale basis}.
+	\paragraph{Stelling 6.26}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een Euclidische ruimte en zij $\beta = \{v_1, v_2, \ldots, v_n\}$ een \textit{orthonormale} basis van $V$. Beschouw willekeurige vectoren $v$ en $w$ in $V$, met respectievelijk $(x_1, \ldots, x_n)$ en $(y_1, \ldots, y_n)$ in $\mathbb{R}^n$ als coördinaatvectoren ten opzichte van $\beta$. Dan is $\langle v , w \rangle = \sum_{i=1}^{n} x_i y_i$.
+	\paragraph{Stelling 6.27 (Orthogonalisatieprocédé van Gram-Schmidt)}	
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een Euclidische ruimte en $\{v_1, v_2 \ldots, v_n\}$	 een willekeurige basis van $V$, dan kan deze basis omgevormd worden to een orthonormale basis $\{u_1, u_2 \ldots, u_n\}$ en wel op een algoritmische wijze. \\ Deze werkwijze staat bekend als het \textbf{Orthogonalisatieprocédé van Gram-Schmidt}.
+	\paragraph{Definitie 6.30}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een Euclidische ruimte en $U$ een deelruimte van $V$. We definiëren het \textbf{orthogonaal complement van $U$} als $$U^\perp = \{v\in V \lvert v \perp u \text{ voor alle } u \in U\}.$$
+	\paragraph{Stelling 6.31}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een Euclidische ruimte en $U$ een deelruimte van $V$. Dan geldt dat 
+		\begin{itemize}
+			\item[(1)] de som $U + U^\perp$ een directe som is (met andere woorden $U \oplus U^\perp$);
+			\item[(2)] $U \oplus U^\perp = V$
+			\item[(3)] $\rdim U + \rdim U^\perp = \rdim V$;
+			\item[(4)] $(U^\perp)^\perp = U$.
+		\end{itemize}
+	\paragraph{Lemma 6.33}
+		Als $A \in \mathbb{R}^{m \times n}$, dan geldt:
+		\begin{itemize}
+			\item[(1)] $N(A) = R(A)^\perp (= C(A^T)^\perp)$,
+			\item[(2)] $C(A)^\perp = N(A^T)$,
+			\item[(3)] $N(A^T \cdot A) = N(A)$, en bijgevolg is de rang van $A$ gelijk aan de rang van $A^T \cdot A$.
+		\end{itemize}
+	\paragraph{Stelling 6.34}
+		Als $U$ een deelruimte is van de Euclidische ruimte $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ en $v \in V$, dan is $p(x)$ de vector in $U$ op minimale afstand van $v$. Hierin is $p$ de afbeelding $$p: V \to V: v \mapsto \langle v , u_1 \rangle u_1 + \langle v , u_2 \rangle u_2 + \ldots + \langle v , u_k \rangle u_k.$$ met $\{u_1, u_2, \ldots , u_k\}$ een orthonormale basis van $U$.
+	\paragraph{Definitie 6.35}
+		Als $U$ een deelruimte is van de Euclidische ruimte $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ en $\beta_U = \{u_1, \ldots , u_k\}$ een (willekeurige) orthonormale basis is van $U$, dan noemt men de afbeelding  
+		$$\pr_U: V \to V: v \mapsto \langle v , u_1 \rangle u_1 + \langle v , u_2 \rangle u_2 + \ldots + \langle v , u_k \rangle u_k$$ de \textbf{orthogonale projectie van $V$ op $U$}.
+	\paragraph{Definitie van Hermitische matrices}
+		Zij $A \in \mathbb{C}^{n \times n}$. Dan is $A$ een Hermitische matrix als en slechts als $A = \left(\overline{A}\right)^T$. \\ Bemerkt dat alle symmetrische matrices ook Hermitische matrices zijn.
+ 	\paragraph{De toverformules}
+		\begin{itemize}
+			\item Zij $A \in \mathbb{C}^{n \times n}$ een symmetrische of Hermitische matrix en $X, Y \in \mathbb{R}^n$ met $\langle X , Y \rangle = X^T\cdot Y$. Dan geldt $$\langle A \cdot X , Y \rangle = \langle X , A \cdot Y \rangle.$$
+			\item Zij $A \in \mathbb{C}^{n \times n}$ een symmetrische of Hermitische matrix en $X, Y \in \mathbb{C}^n$ met $\langle X , Y \rangle = \overline{X}^T \cdot Y$. Dan geldt $$\langle A \cdot X , Y \rangle = \langle X , A \cdot Y \rangle.$$
+		\end{itemize}
+	\paragraph{Lemma 6.37}
+		Zij $(\mathbb{R},\mathbb{R}^n,+, \langle \cdot , \cdot \rangle)$ de standaard Euclidische ruimte en $L_A : \mathbb{R}^n \to \mathbb{R}^n: X \mapsto A \cdot X$ een lineaire transformatie met een symmetrische matrix $A$. Dan heeft $A$ uitsluitend reële eigenwaarden (met andere woorden, dan ontbindt de karakteristieke veelterm $\varphi_A$ volledig als product van eerstegraadsfactoren over $\mathbb{R}$).
+	\paragraph{Lemma 6.39}
+		Zij $(\mathbb{R},\mathbb{R}^n,+, \langle \cdot , \cdot \rangle)$ de standaard Euclidische ruimte en $L_A : \mathbb{R}^n \to \mathbb{R}^n: X \mapsto A \cdot X$ een lineaire transformatie met een symmetrische matrix $A$. Dan zijn de eigenvectoren bij \textit{verschillende} eigenwaarden van $A$ orthogonaal.
+	\paragraph{Lemma 6.41}
+		Zij $(\mathbb{R},\mathbb{R}^n,+, \langle \cdot , \cdot \rangle)$ de standaard Euclidische ruimte en $L_A: \mathbb{R}^n \to \mathbb{R}^n: X \mapsto A \cdot X$ een lineaire transformatie met een symmetrische matrix $A$. Dan is, voor elke eigenwaarde $\lambda$ van $L_A$, de meetkundige multipliciteit $d(\lambda)$ gelijk aan de algebraïsche multipliciteit $m(\lambda)$.
+	\paragraph{Stelling 6.43 (Spectraalstelling voor symmetrische matrices)}
+		Zij $(\mathbb{R},\mathbb{R}^n,+, \langle \cdot , \cdot \rangle)$ de standaard Euclidische ruimte en $L_A: \mathbb{R}^n \to \mathbb{R}^n: X \mapsto A \cdot X$ een lineaire transformatie met een symmetrische matrix $A$. Dan bestaat er een orthonormale basis voor $\mathbb{R}^n$ bestaande uit eigenvectoren van $A$. Met andere woorden, dan is $A$ gelijkvormig met een diagonaalmatrix, en de gelijkvormigheid kan gerealiseerd worden door een basisverandering van de orthonormale standaardbasis naar een orthonormale basis.
+	\paragraph{Stelling 6.44 (Spectraalstelling voor Hermitische matrices)}
+		Zij \newline $(\mathbb{C},\mathbb{C}^n,+, \langle \cdot , \cdot \rangle)$ de standaard unitaire ruimte en $L_A: \mathbb{C}^n \to \mathbb{C}^n: X \mapsto A \cdot X$ een lineaire transformatie met een symmetrische matrix $A$. Dan bestaat er een orthonormale basis voor $\mathbb{C}^n$ bestaande uit eigenvectoren van $A$. Met andere woorden, dan is $A$ gelijkvormig met een diagonaalmatrix, en de gelijkvormigheid kan gerealiseerd worden door een basisverandering van de orthonormale standaardbasis naar een orthonormale basis.
+	\paragraph{Stelling 6.47}	
+		Zij $(\mathbb{R},\mathbb{R}^n,+, \langle \cdot , \cdot \rangle)$ de standaard Euclidische ruimte, en $A \in \mathbb{R}^{n\times n}$ een vierkante matrix. Dan zijn de volgende beweringen over $A$ equivalent:
+		\begin{itemize}
+			\item[(1)] de kolommen van $A$ vormen een orthonormale basis van $\mathbb{R}^n$;
+			\item[(2)] $A^T \cdot A = \mathbb{I}_n$;
+			\item[(3)] $A^{-1}= A^T$;
+			\item[(4)] $A \cdot A^T = \mathbb{I}_n$;
+			\item[(5)] de rijen van $A$ vormen een orthonormale basis van $\mathbb{R}^n$.
+		\end{itemize}
+	\paragraph{Definitie 6.48}	
+		Een matrix $A \in \mathbb{R}^{n\times n}$ noemen we een \textbf{orthogonale matrix} als $A^T= A^{-1}$ (of, equivalent, als $A$ aan de beweringen uit vorige stelling voldoet). \\ Let op! Een \textit{ortho\underline{gonale} matrix} bestaat uit kolommen of rijen die een \textit{ortho\underline{normale} basis} van $\mathbb{R}^n$ vormen.
+	\paragraph{Herfomulering van Stelling 6.43 (Spectraalstelling voor symmetrische matrices)}	
+		Zij $A \in \mathbb{R}^{n\times n}$ een symmetrische matrix. Dan bestaat er een orthogonale matrix $P \in \mathbb{R}^{n\times n}$ zodat $P^{-1}AP = P^TAP$ een diagonaalmatrix is.
+	\paragraph{Lemma 6.51}
+		Als $A \in \mathbb{R}^{n\times n}$ een orthogonale matrix is, dan geldt dat
+		\begin{itemize}
+			\item[(1)] $\det A \in \{-1, +1\}$;
+			\item[(2)] elke (reële) eigenwaarde van $A$ gelijk is aan $+1$ of $-1$.
+		\end{itemize}	
+	\paragraph{Stelling 6.52}
+		Zij $(\mathbb{R},\mathbb{R}^n,+, \langle \cdot , \cdot \rangle)$ de standaard Euclidische ruimte en veronderstel dat $L_A: \mathbb{R}^n \to \mathbb{R}^n: X \mapsto A \cdot X$ een lineaire transformatie is, bepaald door een orthogonale matrix $A$. Dan geldt:
+		\begin{itemize}
+			\item[(1)] $\lVert A\cdot X \rVert = \lVert X \rVert$ voor alle $X\in \mathbb{R}^n$;
+			\item[(2)] $d(A\cdot X, A\cdot Y) = d(X,Y)$ voor alle $X,Y \in \mathbb{R}^n$;
+			\item[(3)] $L_A$ is een isomorfisme;
+			\item[(4)] als $\{u_1, u_2 \ldots, u_n\}$ een orthonormale basis is van $\mathbb{R}^n$, dan is $\{L_A(u_1), L_A(u_2) \ldots, L_A(u_n)\}$ eveneens een orthonormale basis.
+		\end{itemize}
+	\paragraph{Definitie van unitaire matrices}
+		Zij $A \in \mathbb{C}^{n\times n}$. Dan noemen we $A$ een \textbf{unitaire matrix} als $\overline{A}^T = A^{-1}$.	
+	\paragraph{Herfomulering van Stelling 6.44 (Spectraalstelling voor Hermitische matrices)}
+		Zij $A \in \mathbb{C}^{n\times n}$ een Hermitische matrix. Dan bestaat er een 
+		unitaire matrix $P \in \mathbb{C}^{n\times n}$ zodat $P^{-1}AP = \overline{P}^TAP$ een diagonaalmatrix is.
+	\paragraph{Definitie van de Frobeniusnorm}
+		Zij $A \in \mathbb{R}^{m\times n}$. Dan is $$\lVert A \rVert_F = \sqrt{\sum_{i=1}^{m}\sum_{j=1}^{n}(a_{ij})^2}$$ de Frobeniusnorm van $A$. Dit is een waarde die de `grootte' van de matrix $A$ voorstelt.
+	\paragraph{Stelling 6.58}
+		Als $A \in \mathbb{R}^{m\times n}$ en $P \in \mathbb{R}^{m\times m}$ een orthogonale matrix is, dan geldt (voor de matrixnorm of Frobeniusnorm) $$\lVert A \rVert_F = \lVert P\cdot A \rVert_F.$$
+	\paragraph{Definitie 6.59}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte. Een lineaire transformatie $L$ van $V$ heet \textbf{orthogonaal} als $$\langle L(v) , L(w) \rangle = \langle v , w \rangle.$$ voor alle $v,w \in V$.
+	\paragraph{Propositie 6.60}	
+		Een lineaire transformatie $L$ van een inproductruimte $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ is orthogonaal als en slechts alls $\lVert L(v) \rVert = \lVert v \rVert$ voor alle $v \in V$.
+	\paragraph{Propositie 6.61}	
+		Zij $L$ een orthogonale transformatie van een inproductruimte $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$. Dan geldt:
+		\begin{itemize}
+			\item[(1)] elke (reële) eigenwaarde van $L$ is $+1$ of $-1$;
+			\item[(2)] $L$ is injectief en, als $V$ eindigdimensionaal is, ook een isomorfisme.
+		\end{itemize}
+	\paragraph{Stelling 6.62}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een $n$-dimensionale inproductruimte en $L$ een lineaire transformatie van $V$ met matrix $A$ ten opzichte van een \textit{orthonormale} basis van $V$. Dan geldt: $L$ is orthogonaal als en slechts als $A$ orthogonaal is.
+	\paragraph{Definitie 6.63}
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een inproductruimte. Een lineaire transformatie $L$ van $V$ heet \textbf{symmetrisch} als voor alle $v, w \in V$ geldt dat $$\langle L(v) , w \rangle = \langle v , L(w) \rangle.$$
+	\paragraph{Propositie 6.64}	
+		Zij $L$ een symmetrische (lineaire) transformatie van een inproductruimte $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$. Dan zijn eigenvectoren bij verschillende eigenwaarden van $L$ orthogonaal.
+	\paragraph{Stelling 6.66}	
+		Zij $(\mathbb{R},V,+, \langle \cdot , \cdot \rangle)$ een $n$-dimensionale inproductruimte en $L$ een lineaire transformatie van $V$ met matrix $A$ ten opzichte van een \textit{orthonormale} basis van $V$. Dan geldt: $L$ is symmetrisch als en slechts als $A$ symmetrisch is.
+		
+\end{document}
